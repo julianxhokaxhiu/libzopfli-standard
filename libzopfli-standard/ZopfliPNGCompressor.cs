@@ -21,7 +21,7 @@ namespace LibZopfliStandard.Native
         /// <param name="datainsize">Size of binary data in.</param>
         /// <param name="dataout">Binary array to which the result is appended</param>
         /// <returns>Returns data size on success, error code otherwise.</returns>
-        [DllImport("x86\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("runtimes\\win-x86\\native\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ZopfliPNGExternalOptimize(byte[] datain, int datainsize, ref IntPtr dataout);
     }
 
@@ -37,7 +37,7 @@ namespace LibZopfliStandard.Native
         /// <param name="datainsize">Size of binary data in.</param>
         /// <param name="dataout">Binary array to which the result is appended</param>
         /// <returns>Returns data size on success, error code otherwise.</returns>
-        [DllImport("amd64\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("runtimes\\win-x64\\native\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ZopfliPNGExternalOptimize(byte[] datain, int datainsize, ref IntPtr dataout);
     }
 }

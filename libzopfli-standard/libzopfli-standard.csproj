@@ -31,7 +31,7 @@
   <ItemGroup>
 	<None Include="..\LICENSE" Pack="true" PackagePath="" />
 	<None Include="..\README.md" Pack="true" PackagePath="" />
-	<None Include="NativeBinaries\**\*.*" Pack="true" PackagePath="NativeBinaries\" />
+	<None Include="runtimes\**\*.*" Pack="true" PackagePath="runtimes\" />
 	<Content Include="libzopfli-standard.targets" Pack="true" PackagePath="build\net8.0\" />
 	<Content Include="tools\**\*.*" Pack="true" PackagePath="tools" />
   </ItemGroup>

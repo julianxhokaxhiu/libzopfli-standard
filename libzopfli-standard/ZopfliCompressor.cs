@@ -23,7 +23,7 @@ namespace LibZopfliStandard.Native
         /// <param name="data_size">This is the size of the memory block pointed to by data</param>
         /// <param name="data_out">Pointer to the dynamic output array to which the result is appended</param>
         /// <param name="data_out_size">This is the size of the memory block pointed to by the dynamic output array size</param>
-        [DllImport("x86\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("runtimes\\win-x86\\native\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ZopfliCompress(ref ZopfliOptions options, ZopfliFormat output_type, byte[] data, int data_size, ref IntPtr data_out, ref UIntPtr data_out_size);
     }
 
@@ -41,7 +41,7 @@ namespace LibZopfliStandard.Native
         /// <param name="data_size">This is the size of the memory block pointed to by data</param>
         /// <param name="data_out">Pointer to the dynamic output array to which the result is appended</param>
         /// <param name="data_out_size">This is the size of the memory block pointed to by the dynamic output array size</param>
-        [DllImport("amd64\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("runtimes\\win-x64\\native\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ZopfliCompress(ref ZopfliOptions options, ZopfliFormat output_type, byte[] data, int data_size, ref IntPtr data_out, ref UIntPtr data_out_size);
     }
 }

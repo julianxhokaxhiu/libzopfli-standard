@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <!-- Base path relative to this .targets file -->
-    <NativeBasePath>$(MSBuildThisFileDirectory)..\..\NativeBinaries</NativeBasePath>
+    <NativeBasePath>$(MSBuildThisFileDirectory)..\..\runtimes</NativeBasePath>
   </PropertyGroup>
 
   <!-- Windows x86 -->
   <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x86'">
-    <Content Include="$(NativeBasePath)\x86\zopfli.dll">
+    <Content Include="$(NativeBasePath)\win-x86\native\zopfli.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>zopfli.dll</Link>
       <Pack>true</Pack>
@@ -16,7 +16,7 @@
 
   <!-- Windows x64 -->
   <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
-    <Content Include="$(NativeBasePath)\amd64\zopfli.dll">
+    <Content Include="$(NativeBasePath)\win-x64\native\zopfli.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>zopfli.dll</Link>
       <Pack>true</Pack>
