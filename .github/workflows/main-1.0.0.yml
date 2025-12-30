@@ -1,0 +1,107 @@
+name: libzopfli-standard
+
+run-name: 1.0.0.${{ github.run_number }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+    tags:
+    - "*"
+  pull_request:
+    branches:
+    - master
+
+env:
+  _IS_BUILD_CANARY: false
+  _IS_GITHUB_RELEASE: false
+  _RELEASE_NAME: libzopfli-standard
+  _RELEASE_VERSION: v0
+  _RELEASE_CONFIGURATION: Release
+  _BUILD_BRANCH: "${{ github.ref }}"
+  _BUILD_VERSION: "1.0.0.${{ github.run_number }}"
+  # GIT: Fix reporting from stderr to stdout
+  GIT_REDIRECT_STDERR: 2>&1
+
+jobs:
+  libzopfli-standard:
+    runs-on: windows-latest
+
+    steps:
+    - name: Set Git Config
+      run: |
+        git config --global core.autocrlf false
+        git config --global core.filemode false
+        git config --global core.longpaths true
+
+    - name: Checkout
+      uses: actions/checkout@v4.1.0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Prepare Environment
+      run: ".github/workflows/prepare.ps1"
+      shell: pwsh
+
+    - name: Update project version
+      uses: roryprimrose/set-vs-sdk-project-version@v1
+      with:
+        version: "${{ env._BUILD_VERSION }}"
+        assemblyVersion: "${{ env._BUILD_VERSION }}"
+        fileVersion: "${{ env._BUILD_VERSION }}"
+        informationalVersion: "${{ env._BUILD_VERSION }}"
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build ${{ env._RELEASE_NAME }}\${{ env._RELEASE_NAME }}.csproj --configuration ${{ env._RELEASE_CONFIGURATION }} --no-restore
+
+    - name: Pack NuGet package
+      run: dotnet pack ${{ env._RELEASE_NAME }}\${{ env._RELEASE_NAME }}.csproj --configuration ${{ env._RELEASE_CONFIGURATION }} --no-build
+
+    - name: Package the release
+      run: ".github/workflows/package.ps1"
+      shell: pwsh
+
+    - name: Publish PR artifacts
+      if: env._IS_GITHUB_RELEASE == 'false' && success()
+      uses: actions/upload-artifact@v4.0.0
+      with:
+        name: "${{ env._RELEASE_NAME }}-${{ env._RELEASE_VERSION }}"
+        path: ".dist/*"
+
+    - name: Publish Canary release
+      uses: ncipollo/release-action@v1
+      if: env._IS_GITHUB_RELEASE == 'true' && env._IS_BUILD_CANARY == 'true' && success()
+      with:
+        artifacts: ".dist/*"
+        allowUpdates: true
+        generateReleaseNotes: true
+        prerelease: true
+        removeArtifacts: true
+        tag: canary
+        name: "${{ env._RELEASE_NAME }}-${{ env._RELEASE_VERSION }}"
+        body: |
+          This is a canary build. Please be aware it may be prone to crashing and is NOT tested by anyone. Use this build AT YOUR OWN RISK!
+
+    - name: Publish Stable release
+      uses: ncipollo/release-action@v1
+      if: env._IS_GITHUB_RELEASE == 'true' && env._IS_BUILD_CANARY == 'false' && success()
+      with:
+        artifacts: ".dist/*"
+        generateReleaseNotes: true
+        makeLatest: true
+        removeArtifacts: true
+        name: "${{ env._RELEASE_NAME }}-${{ env._RELEASE_VERSION }}"
+
+    - name: Publish to NuGet.org
+      if: env._IS_GITHUB_RELEASE == 'true' && env._IS_BUILD_CANARY == 'false' && success()
+      run: dotnet nuget push ".dist\*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
