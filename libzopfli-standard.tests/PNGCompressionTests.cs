@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FluentAssertions;
 using System.Linq;
 using System.IO;
@@ -8,14 +8,14 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Drawing;
 
-namespace LibZopfliSharp.Tests
+namespace LibZopfliStandard.Tests
 {
     // Test files thanks to Echovoice, Copyright 2013 Echovoice LLC
 
-    [TestClass]
+    [TestFixture]
     public class PNGCompressionTests
     {
-        [TestMethod]
+        [Test]
         public void testPNGCompression()
         {
             // itterate over all test images
@@ -27,11 +27,11 @@ namespace LibZopfliSharp.Tests
                 int before = uncompressed.Length;
                 byte[] compressed = ZopfliPNG.compress(uncompressed);
                 int after = compressed.Length;
-                before.Should().BeGreaterOrEqualTo(after);
+                before.Should().BeGreaterThanOrEqualTo(after);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void testImageObjectPNGCompression()
         {
             // capture initial file size
@@ -53,10 +53,10 @@ namespace LibZopfliSharp.Tests
             File.Delete(tempFile);
 
             // verify
-            before.Should().BeGreaterOrEqualTo(after);
+            before.Should().BeGreaterThanOrEqualTo(after);
         }
 
-        [TestMethod]
+        [Test]
         public void testPNGCompressionbyFilePath()
         {
             // copy a test file
@@ -78,10 +78,10 @@ namespace LibZopfliSharp.Tests
             File.Delete(tempFile);
 
             // verify
-            before.Should().BeGreaterOrEqualTo(after);
+            before.Should().BeGreaterThanOrEqualTo(after);
         }
 
-        [TestMethod]
+        [Test]
         public void testPNGStreamCompression()
         {
             // make sure compression works, file should be smaller
@@ -103,25 +103,25 @@ namespace LibZopfliSharp.Tests
             before.Should().BeGreaterThan(after);
         }
 
-        [TestMethod]
+        [Test]
         public void testPNGEmpty()
         {
             Action action = () => { byte[] compressed = ZopfliPNG.compress(File.ReadAllBytes("files/empty.png")); };
-            action.ShouldThrow<ZopfliPNGException>().WithMessage("empty input or file doesn't exist");
+            action.Should().Throw<ZopfliPNGException>().WithMessage("empty input or file doesn't exist");
         }
 
-        [TestMethod]
+        [Test]
         public void testPNGCorrupt()
         {
             Action action = () => { byte[] compressed = ZopfliPNG.compress(File.ReadAllBytes("files/corrupt.png")); };
-            action.ShouldThrow<ZopfliPNGException>().WithMessage("incorrect PNG signature, it's no PNG or corrupted");
+            action.Should().Throw<ZopfliPNGException>().WithMessage("incorrect PNG signature, it's no PNG or corrupted");
         }
 
-        [TestMethod]
+        [Test]
         public void testPNGSmallHeader()
         {
             Action action = () => { byte[] compressed = ZopfliPNG.compress(File.ReadAllBytes("files/small-header.png")); };
-            action.ShouldThrow<ZopfliPNGException>().WithMessage("PNG file is smaller than a PNG header");
+            action.Should().Throw<ZopfliPNGException>().WithMessage("PNG file is smaller than a PNG header");
         }
     }
 }

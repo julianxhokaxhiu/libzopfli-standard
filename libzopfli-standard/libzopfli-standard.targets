@@ -1,0 +1,26 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- Base path relative to this .targets file -->
+    <NativeBasePath>$(MSBuildThisFileDirectory)..\..\NativeBinaries</NativeBasePath>
+  </PropertyGroup>
+
+  <!-- Windows x86 -->
+  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x86'">
+    <Content Include="$(NativeBasePath)\x86\zopfli.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>zopfli.dll</Link>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+
+  <!-- Windows x64 -->
+  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+    <Content Include="$(NativeBasePath)\amd64\zopfli.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>zopfli.dll</Link>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>

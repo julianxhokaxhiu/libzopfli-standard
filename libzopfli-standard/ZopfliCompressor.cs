@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibZopfliSharp.Native
+namespace LibZopfliStandard.Native
 {
     /// <summary>
     /// x86 Zopfli Compressor Hooks

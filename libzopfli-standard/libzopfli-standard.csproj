@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<TargetFrameworks>net8.0</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <RootNamespace>LibZopfliStandard</RootNamespace>
+    <AssemblyTitle>libzopfli-standard</AssemblyTitle>
+    <Product>libzopfli-standard</Product>
+	<SignAssembly>true</SignAssembly>
+	<DelaySign>false</DelaySign>
+	<Version>0.0.0</Version>
+	<Authors>echovoice; julianxhokaxhiu</Authors>
+	<Description>A C# wrapper for the Zopfli Compression Algorithm</Description>
+    <PackageTags>zopfli native interop netstandard net8</PackageTags>
+    <PackageProjectUrl>https://github.com/julianxhokaxhiu/libzopfli-standard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/julianxhokaxhiu/libzopfli-standard</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludePackageReadmeFile>true</IncludePackageReadmeFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\libzopfli-standard.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DocumentationFile>bin\Release\libzopfli-standard.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+	<None Include="..\LICENSE" Pack="true" PackagePath="" />
+	<None Include="..\README.md" Pack="true" PackagePath="" />
+	<None Include="NativeBinaries\**\*.*" Pack="true" PackagePath="NativeBinaries\" />
+	<Content Include="libzopfli-standard.targets" Pack="true" PackagePath="build\net8.0\" />
+	<Content Include="tools\**\*.*" Pack="true" PackagePath="tools" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="tools\uninstall.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="tools\GetZopfliPostBuildCmd.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="tools\install.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibZopfliSharp
+namespace LibZopfliStandard
 {
     public class ZopfliStream : Stream
     {

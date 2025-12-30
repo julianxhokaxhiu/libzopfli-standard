@@ -1,4 +1,4 @@
-﻿using LibZopfliSharp.Native;
+﻿using LibZopfliStandard.Native;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibZopfliSharp
+namespace LibZopfliStandard
 {
     /// <summary>
     /// Zopfli PNG Compression Extensions

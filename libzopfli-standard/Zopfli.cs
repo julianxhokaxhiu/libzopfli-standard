@@ -1,4 +1,4 @@
-﻿using LibZopfliSharp.Native;
+﻿using LibZopfliStandard.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibZopfliSharp
+namespace LibZopfliStandard
 {
     /// <summary>
     /// Zopfli Compression Algorithm is a new zlib (gzip, deflate) compatible compressor. This compressor takes more time (~100x slower), but compresses around 5% better than zlib and better than any other zlib-compatible compressor we have found.

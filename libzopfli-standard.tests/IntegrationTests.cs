@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using FluentAssertions;
 using System.IO;
@@ -9,7 +8,7 @@ using System.Reflection;
 using Ionic.Zlib;
 using System.Threading;
 
-namespace LibZopfliSharp.Tests
+namespace LibZopfliStandard.Tests
 {
     // Test files thanks to http://www.maximumcompression.com/data/files/
 

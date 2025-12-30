@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibZopfliSharp
+namespace LibZopfliStandard
 {
     /// <summary>
     /// Access to native lib from c#

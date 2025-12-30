@@ -1,9 +1,12 @@
-zopfli-sharp ![project-status](http://stillmaintained.com/echovoice/libzopfli-sharp.png)
-============
+# libzopfli-standard ![project-status](http://stillmaintained.com/julianxhokaxhiu/libzopfli-standard.png)
 
 A C# wrapper for the Zopfli Compression Algorithm
 
-This library is available on Nuget as [libzopfli-sharp](https://www.nuget.org/packages/libzopfli-sharp).
+<sup>This is a continuation of [echovoice](https://github.com/echovoice)'s [libzopfli-sharp](https://github.com/echovoice/libzopfli-sharp).</sup>
+
+---
+
+This library is available on Nuget as [libzopfli-standard](https://www.nuget.org/packages/libzopfli-standard).
 
 What is Zopfli?
 ============================
