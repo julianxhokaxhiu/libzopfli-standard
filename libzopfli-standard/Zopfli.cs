@@ -51,11 +51,8 @@ namespace LibZopfliStandard
                 // Get image data length
                 UIntPtr data_size = (UIntPtr)data_in.Length;
 
-                // Compress the data via native methods
-                if (Environment.Is64BitProcess)
-                    ZopfliCompressor64.ZopfliCompress(ref options, type, data_in, data_in.Length, ref result, ref result_size);
-                else
-                    ZopfliCompressor32.ZopfliCompress(ref options, type, data_in, data_in.Length, ref result, ref result_size);
+                ZopfliLoader.EnsureLoaded();
+                ZopfliCompressor.ZopfliCompress(ref options, type, data_in, data_in.Length, ref result, ref result_size);
 
                 // Copy data back to managed memory and return
                 return NativeUtilities.GetDataFromUnmanagedMemory(result, (int)result_size);
