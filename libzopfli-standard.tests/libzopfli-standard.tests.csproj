@@ -14,13 +14,16 @@
     <None Update="files\fp.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <PackageReference Include="Microsoft.NET.Test.SDK" Version="18.0.1" />
     <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="FluentAssertions" Version="8.8.0" />
     <PackageReference Include="NUnit" Version="4.4.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\libzopfli-standard\libzopfli-standard.csproj" />
+    <ProjectReference Include="..\libzopfli-standard\libzopfli-standard.csproj">
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="files\favicon.ico">
@@ -45,4 +48,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <Target Name="ZopfliAfterBuild" AfterTargets="AfterBuild">
+	<ItemGroup>
+	  <!-- Because this ItemGroup is inside the target, this will enumerate
+            all files just before calling Copy. If the ItemGroup were outside
+            the target , it would enumerate the files during evaluation, before
+            the build starts, which may miss files created during the build. -->
+	  <RuntimeFiles Include="..\libzopfli-standard\runtimes\**\*.*"/>
+	</ItemGroup>
+    <Copy SourceFiles="@(RuntimeFiles)" DestinationFolder="$(OutputPath)\runtimes\%(RecursiveDir)" ContinueOnError="false" />
+  </Target>
 </Project>
