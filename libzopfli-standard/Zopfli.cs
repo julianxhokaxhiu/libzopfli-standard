@@ -52,7 +52,7 @@ namespace LibZopfliStandard
                 UIntPtr data_size = (UIntPtr)data_in.Length;
 
                 ZopfliLoader.EnsureLoaded();
-                ZopfliCompressor.ZopfliCompress(ref options, type, data_in, data_in.Length, ref result, ref result_size);
+                ZopfliCompressor.ZopfliCompress(ref options, type, data_in, (nuint)data_in.Length, ref result, ref result_size);
 
                 // Copy data back to managed memory and return
                 return NativeUtilities.GetDataFromUnmanagedMemory(result, (int)result_size);

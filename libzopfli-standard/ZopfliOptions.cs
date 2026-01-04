@@ -10,7 +10,7 @@ namespace LibZopfliStandard
     /// <summary>
     /// Zopfli format options
     /// </summary>
-    public enum ZopfliFormat
+    public enum ZopfliFormat : int
     {
         ZOPFLI_FORMAT_GZIP,
         ZOPFLI_FORMAT_ZLIB,
@@ -20,8 +20,8 @@ namespace LibZopfliStandard
     /// <summary>
     /// Zopfli Options
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public class ZopfliOptions
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ZopfliOptions
     {
         // Whether to print output
         public int verbose;
