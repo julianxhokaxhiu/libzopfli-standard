@@ -103,7 +103,7 @@ namespace LibZopfliStandard
             base.Dispose(disposing);
             if (!leaveOpen)
                 _innerStream.Dispose();
-            options = null;
+            options = default;
         }
     }
 }

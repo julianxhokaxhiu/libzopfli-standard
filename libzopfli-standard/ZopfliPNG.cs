@@ -140,11 +140,10 @@ namespace LibZopfliStandard
                 // Get image data length
                 UIntPtr data_size = (UIntPtr)data_in.Length;
 
+                ZopfliPNGLoader.EnsureLoaded();
+
                 // Compress the data via native methods
-                if(Environment.Is64BitProcess)
-                    error = ZopfliPNGCompressor64.ZopfliPNGExternalOptimize(data_in, data_in.Length, ref result);
-                else
-                    error = ZopfliPNGCompressor32.ZopfliPNGExternalOptimize(data_in, data_in.Length, ref result);
+                error = ZopfliPNGCompressor.CZopfliPNGOptimize(data_in, data_size, ref options, 0, out result, out data_size);
 
                 // Copy data back to managed memory and return
                 return NativeUtilities.GetDataFromUnmanagedMemory(result, error);

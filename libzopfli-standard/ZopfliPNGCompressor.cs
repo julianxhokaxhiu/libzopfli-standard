@@ -12,32 +12,21 @@ namespace LibZopfliStandard.Native
     /// <summary>
     /// x86 Native Hooks
     /// </summary>
-    public class ZopfliPNGCompressor32
+    public class ZopfliPNGCompressor
     {
         /// <summary>
         /// Library to recompress and optimize PNG images. Uses Zopfli as the compression backend, chooses optimal PNG color model, and tries out several PNG filter strategies.
         /// </summary>
-        /// <param name="datain">Binary array to the PNG data</param>
-        /// <param name="datainsize">Size of binary data in.</param>
-        /// <param name="dataout">Binary array to which the result is appended</param>
+        
         /// <returns>Returns data size on success, error code otherwise.</returns>
-        [DllImport("runtimes\\win-x86\\native\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int ZopfliPNGExternalOptimize(byte[] datain, int datainsize, ref IntPtr dataout);
-    }
+        [DllImport("libzopflipng", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int CZopfliPNGOptimize(byte[] origpng, UIntPtr origpngSize, ref ZopfliPNGOptions pngOptions, int verbose, out IntPtr resultpng, out UIntPtr resultpngSize);
 
-    /// <summary>
-    /// x64 Native Hooks
-    /// </summary>
-    public class ZopfliPNGCompressor64
-    {
         /// <summary>
-        /// Library to recompress and optimize PNG images. Uses Zopfli as the compression backend, chooses optimal PNG color model, and tries out several PNG filter strategies.
+        /// Sets the default options
         /// </summary>
-        /// <param name="datain">Binary array to the PNG data</param>
-        /// <param name="datainsize">Size of binary data in.</param>
-        /// <param name="dataout">Binary array to which the result is appended</param>
-        /// <returns>Returns data size on success, error code otherwise.</returns>
-        [DllImport("runtimes\\win-x64\\native\\zopfli.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int ZopfliPNGExternalOptimize(byte[] datain, int datainsize, ref IntPtr dataout);
+        /// <param name="pngOptions"></param>
+        [DllImport("libzopflipng", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void CZopfliPNGSetDefaults(ref ZopfliPNGOptions pngOptions);
     }
 }
