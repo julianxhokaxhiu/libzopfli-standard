@@ -44,12 +44,15 @@ namespace LibZopfliStandard.Tests
             before.Should().BeGreaterThan(after);
 
             // make sure we can decompress the file using built-in .net
-            byte[] decompressedBytes = new byte[before];
-            using (System.IO.Compression.DeflateStream decompressionStream = new System.IO.Compression.DeflateStream(new MemoryStream(compressed), System.IO.Compression.CompressionMode.Decompress))
+            byte[] decompressedBytes;
+            using (var decompressionStream = new System.IO.Compression.DeflateStream(new MemoryStream(compressed), System.IO.Compression.CompressionMode.Decompress))
+            using (var result = new MemoryStream())
             {
-                decompressionStream.Read(decompressedBytes, 0, before);
+                decompressionStream.CopyTo(result);
+                decompressedBytes = result.ToArray();
             }
             uncompressed.Should().Equal(decompressedBytes);
+
 
             // use built-in .net compression and make sure zopfil is smaller
             int after_builtin = 0;
@@ -99,7 +102,7 @@ namespace LibZopfliStandard.Tests
                 // Test if MemoryStream is still leaved open
                 ms.Position = 0;
                 byte[] compressed = ms.ToArray();
-                ms.Length.Should().Equals(compressed.Length);
+                ms.Length.Should().Be(compressed.Length);
                 after = compressed.Length;
             }
             
@@ -130,11 +133,13 @@ namespace LibZopfliStandard.Tests
             before.Should().BeGreaterThan(after);
 
             // make sure we can decompress the file using built-in .net
-            byte[] decompressedBytes = new byte[before];
-            using (MemoryStream tempStream = new MemoryStream(compressed))
-            using (System.IO.Compression.GZipStream decompressionStream = new System.IO.Compression.GZipStream(tempStream, System.IO.Compression.CompressionMode.Decompress))
+            byte[] decompressedBytes;
+            using (var tempStream = new MemoryStream(compressed))
+            using (var decompressionStream = new System.IO.Compression.GZipStream(tempStream, System.IO.Compression.CompressionMode.Decompress))
+            using (var result = new MemoryStream())
             {
-                decompressionStream.Read(decompressedBytes, 0, before);
+                decompressionStream.CopyTo(result);
+                decompressedBytes = result.ToArray();
             }
             uncompressed.Should().Equal(decompressedBytes);
 
